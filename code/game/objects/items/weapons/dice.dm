@@ -1,8 +1,3 @@
-#define DICE_NOT_RIGGED			0
-#define DICE_BASICALLY_RIGGED	1
-#define DICE_TOTALLY_RIGGED		2
-
-
 /obj/item/dice
 	name = "dice"
 	desc = "A base for dices. You should not see this. Yell at coder."
@@ -18,7 +13,7 @@
 	/// Enabling increased chances for `rigged_value` when rolling die.
 	/// DICE_NOT_RIGGED - Usual chances. DICE_BASICALLY_RIGGED - High chances. DICE_TOTALLY_RIGGED - 100%.
 	var/rigged = DICE_NOT_RIGGED
-	/// A specific side that has a higher chance of dropping if `rigged` is enabled.
+	/// A specific `result` that has a higher chance of dropping if `rigged` is enabled.
 	var/rigged_value
 
 
@@ -60,7 +55,7 @@
 /obj/item/dice/proc/roll_die(mob/thrower)
 	SHOULD_CALL_PARENT(TRUE)
 
-	result = rand(1, sides)
+	result = manipulate_result(rand(1, sides))
 
 	if(rigged != DICE_NOT_RIGGED && result != rigged_value)	// TGstation logic and it looks good.
 		if(rigged == DICE_BASICALLY_RIGGED && prob(clamp(1 / (sides - 1) * 100, 25, 80)))
@@ -69,7 +64,6 @@
 		else if(rigged == DICE_TOTALLY_RIGGED)
 			result = rigged_value
 
-	result = manipulate_result(result)
 	finalize_roll_die()
 
 
@@ -163,8 +157,3 @@
 
 /obj/item/dice/d00/manipulate_result(original)
 	return (original - 1) * 10	// 0, 10, 20 ... 90. It's works best with `d10`.
-
-
-#undef DICE_NOT_RIGGED
-#undef DICE_BASICALLY_RIGGED
-#undef DICE_TOTALLY_RIGGED

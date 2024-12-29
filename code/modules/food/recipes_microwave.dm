@@ -1781,3 +1781,19 @@
 		/obj/item/reagent_containers/food/snacks/slice/unscotti
 	)
 	result_path = /obj/item/reagent_containers/food/snacks/biscotti
+
+/datum/microwave_recipe/melted_dice
+	required_items = list(
+		/obj/item/dice
+	)
+	result_path = /obj/item/dice
+
+/datum/microwave_recipe/melted_dice/CreateResult(obj/machinery/microwave/microwave, ...)
+	var/obj/item/dice/dice = locate() in microwave
+	. = dice
+
+	if(dice.rigged == DICE_TOTALLY_RIGGED)
+		return
+
+	dice.rigged = DICE_BASICALLY_RIGGED
+	dice.rigged_value = dice.result

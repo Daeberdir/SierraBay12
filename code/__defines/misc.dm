@@ -343,3 +343,9 @@
 #define SANITY_CHECK_DEFAULT (SANITY_CHECK_TOOL_IN_HAND | SANITY_CHECK_BOTH_ADJACENT)
 
 #define Z_ALL_TURFS(Z) block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z))
+
+
+// Levels of `/obj/item/dice::rigged` var.
+#define DICE_NOT_RIGGED			0
+#define DICE_BASICALLY_RIGGED	1
+#define DICE_TOTALLY_RIGGED		2
