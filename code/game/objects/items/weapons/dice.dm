@@ -15,7 +15,11 @@
 /obj/item/dice/Initialize()
 	. = ..()
 
-	roll_die()
+	if(!result)
+		roll_die()
+		return
+
+	update_icon()
 
 
 /obj/item/dice/on_update_icon()
