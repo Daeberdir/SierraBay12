@@ -8,7 +8,7 @@
 
 	/// The number of the sides of the die. Not just the limits of the potential `result` (see `roll_die()`).
 	var/sides = 0
-	///Last rolling result. Needed for normal icon updating.
+	/// Last rolling result. Needed for normal icon updating.
 	var/result = 0
 
 
