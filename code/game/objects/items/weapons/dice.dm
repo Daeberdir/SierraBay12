@@ -19,8 +19,7 @@
 		roll_die()
 		return
 
-	desc = initial(desc) + SPAN_NOTICE("<br>Current result: [result].")
-	update_icon()
+	finalize_roll_die()
 
 
 /obj/item/dice/on_update_icon()
@@ -52,13 +51,17 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	result = manipulate_result(rand(1, sides))
-	desc = initial(desc) + SPAN_NOTICE("<br>Current result: [result].")
-	update_icon()
+	finalize_roll_die()
 
 
 /// For use in dice that have unusual side names.
 /obj/item/dice/proc/manipulate_result(original)
 	return original
+
+
+/obj/item/dice/proc/finalize_roll_die()
+	desc = initial(desc) + SPAN_NOTICE("<br>Current result: [result].")
+	update_icon()
 
 
 /obj/item/dice/d4
