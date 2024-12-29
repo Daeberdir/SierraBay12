@@ -39,7 +39,7 @@
 								/obj/item/storage/box/checkers	= TRADER_ALL,
 								/obj/item/deck					= TRADER_SUBTYPES_ONLY,
 								/obj/item/pack					= TRADER_SUBTYPES_ONLY,
-								/obj/item/dice/d6				= TRADER_ALL,
+								/obj/item/dice					= TRADER_SUBTYPES_ONLY,
 								/obj/item/dice/d20/cursed		= TRADER_BLACKLIST,
 								/obj/item/gun/launcher/money	= TRADER_THIS_TYPE)
 
