@@ -25,7 +25,7 @@
 
 
 /obj/item/dice/attack_self(mob/user)
-	var/comment = roll_die()
+	var/comment = roll_die(user)
 
 	user.visible_message(SPAN_NOTICE("[user] has thrown [src]. It lands on [result]. [comment]"), \
 						 SPAN_NOTICE("You throw [src]. It lands on a [result]. [comment]"), \
@@ -34,7 +34,7 @@
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/TT)
 	..()
-	var/comment = roll_die()
+	var/comment = roll_die(TT.thrower)
 
 	if(!TT.thrower)
 		return	//	Less spam when moving with explosions, etc.
@@ -43,7 +43,7 @@
 
 
 /// Gives a random result and changing icon after it. Also returns a comment about result.
-/obj/item/dice/proc/roll_die()
+/obj/item/dice/proc/roll_die(mob/thrower)
 	SHOULD_CALL_PARENT(TRUE)
 
 	result = rand(1, sides)
@@ -92,7 +92,7 @@
 	sides = 20
 
 
-/obj/item/dice/d20/roll_die()
+/obj/item/dice/d20/roll_die(mob/thrower)
 	. = ..()
 
 	if(result == 20)
@@ -106,13 +106,13 @@
 	desc = "A dice with twenty sides said to have an ill effect on those that are unlucky..."
 
 
-/obj/item/dice/d20/cursed/attack_self(mob/user)
-	..()
+/obj/item/dice/d20/cursed/roll_die(mob/thrower)
+	. = ..()
 
-	if(!isliving(user))
+	if(!isliving(thrower))
 		return
 
-	var/mob/living/thrower_living = user
+	var/mob/living/thrower_living = thrower
 
 	if(result == 20)
 		thrower_living.adjustBruteLoss(-30)
