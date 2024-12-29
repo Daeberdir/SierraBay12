@@ -27,21 +27,21 @@
 								/obj/item/toy/figure/ert    = TRADER_THIS_TYPE,
 								/obj/item/toy/prize/honk    = TRADER_THIS_TYPE)
 
-	possible_trading_items = list(/obj/item/toy/prize                 = TRADER_SUBTYPES_ONLY,
-								/obj/item/toy/prize/honk              = TRADER_BLACKLIST,
-								/obj/item/toy/figure                  = TRADER_SUBTYPES_ONLY,
-								/obj/item/toy/figure/ert              = TRADER_BLACKLIST,
-								/obj/item/toy/plushie                 = TRADER_SUBTYPES_ONLY,
-								/obj/item/toy/katana                  = TRADER_THIS_TYPE,
-								/obj/item/toy/sword                   = TRADER_THIS_TYPE,
-								/obj/item/toy/bosunwhistle            = TRADER_THIS_TYPE,
-								/obj/item/board                = TRADER_THIS_TYPE,
-								/obj/item/storage/box/checkers = TRADER_ALL,
-								/obj/item/deck                 = TRADER_SUBTYPES_ONLY,
-								/obj/item/pack                 = TRADER_SUBTYPES_ONLY,
-								/obj/item/dice                 = TRADER_ALL,
-								/obj/item/dice/d20/cursed      = TRADER_BLACKLIST,
-								/obj/item/gun/launcher/money   = TRADER_THIS_TYPE)
+	possible_trading_items = list(/obj/item/toy/prize			= TRADER_SUBTYPES_ONLY,
+								/obj/item/toy/prize/honk		= TRADER_BLACKLIST,
+								/obj/item/toy/figure			= TRADER_SUBTYPES_ONLY,
+								/obj/item/toy/figure/ert		= TRADER_BLACKLIST,
+								/obj/item/toy/plushie			= TRADER_SUBTYPES_ONLY,
+								/obj/item/toy/katana			= TRADER_THIS_TYPE,
+								/obj/item/toy/sword				= TRADER_THIS_TYPE,
+								/obj/item/toy/bosunwhistle		= TRADER_THIS_TYPE,
+								/obj/item/board					= TRADER_THIS_TYPE,
+								/obj/item/storage/box/checkers	= TRADER_ALL,
+								/obj/item/deck					= TRADER_SUBTYPES_ONLY,
+								/obj/item/pack					= TRADER_SUBTYPES_ONLY,
+								/obj/item/dice/d6				= TRADER_ALL,
+								/obj/item/dice/d20/cursed		= TRADER_BLACKLIST,
+								/obj/item/gun/launcher/money	= TRADER_THIS_TYPE)
 
 /datum/trader/ship/electronics
 	name = "Electronic Shop Employee"

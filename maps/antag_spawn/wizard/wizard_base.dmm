@@ -100,7 +100,7 @@
 /area/map_template/wizard_station)
 "as" = (
 /obj/structure/table/woodentable,
-/obj/item/dice,
+/obj/item/dice/d6,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"

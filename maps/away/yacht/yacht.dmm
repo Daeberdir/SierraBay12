@@ -283,7 +283,7 @@
 "aQ" = (
 /obj/structure/table/marble,
 /obj/item/deck/cards,
-/obj/item/dice,
+/obj/item/dice/d6,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood/yew,
 /area/yacht/living)

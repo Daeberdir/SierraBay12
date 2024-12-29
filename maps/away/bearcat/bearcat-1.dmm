@@ -565,7 +565,7 @@
 	},
 /obj/structure/table/gamblingtable,
 /obj/item/deck/cards,
-/obj/item/dice,
+/obj/item/dice/d6,
 /turf/simulated/floor,
 /area/ship/scrap/gambling)
 "bl" = (

@@ -1,78 +1,128 @@
 /obj/item/dice
-	name = "d6"
-	desc = "A dice with six sides."
+	name = "dice"
+	desc = "A base for dices. You should not see this. Yell at coder."
 	icon = 'icons/obj/dice.dmi'
-	icon_state = "d66"
+	icon_state = "holder"
 	w_class = ITEM_SIZE_TINY
-	var/sides = 6
 	attack_verb = list("diced")
+
+	/// The number of the sides of the die. Not just the limits of the potential `result` (see `roll_die()`).
+	var/sides = 0
+	///Last rolling result. Needed for normal icon updating.
+	var/result = 0
+
 
 /obj/item/dice/Initialize()
 	. = ..()
-	icon_state = "[name][rand(1,sides)]"
 
-/obj/item/dice/d4
-	name = "d4"
-	desc = "A dice with four sides."
-	icon_state = "d44"
-	sides = 4
+	roll_die()
 
-/obj/item/dice/d8
-	name = "d8"
-	desc = "A dice with eight sides."
-	icon_state = "d88"
-	sides = 8
 
-/obj/item/dice/d10
-	name = "d10"
-	desc = "A dice with ten sides."
-	icon_state = "d1010"
-	sides = 10
+/obj/item/dice/on_update_icon()
+	. = ..()
 
-/obj/item/dice/d12
-	name = "d12"
-	desc = "A dice with twelve sides."
-	icon_state = "d1212"
-	sides = 12
+	icon_state = "[initial(icon_state)]-[result]"
 
-/obj/item/dice/d20
-	name = "d20"
-	desc = "A dice with twenty sides."
-	icon_state = "d2020"
-	sides = 20
 
-/obj/item/dice/d100
-	name = "d100"
-	desc = "A dice with ten sides. This one is for the tens digit."
-	icon_state = "d10010"
-	sides = 10
+/obj/item/dice/attack_self(mob/user)
+	var/comment = roll_die()
 
-/obj/item/dice/proc/roll_die()
-	var/result = rand(1, sides)
-	return list(result, "")
-
-/obj/item/dice/d20/roll_die()
-	var/result = rand(1, sides)
-	var/comment = ""
-	if(result == 20)
-		comment = "Nat 20!"
-	else if(result == 1)
-		comment = "Ouch, bad luck."
-	return list(result, comment)
-
-/obj/item/dice/attack_self(mob/user as mob)
-	var/list/roll_result = roll_die()
-	var/result = roll_result[1]
-	var/comment = roll_result[2]
-	icon_state = "[name][result]"
 	user.visible_message(SPAN_NOTICE("[user] has thrown [src]. It lands on [result]. [comment]"), \
 						 SPAN_NOTICE("You throw [src]. It lands on a [result]. [comment]"), \
 						 SPAN_NOTICE("You hear [src] landing on a [result]. [comment]"))
 
-/obj/item/dice/throw_impact()
+
+/obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/TT)
 	..()
-	var/list/roll_result = roll_die()
-	var/result = roll_result[1]
-	var/comment = roll_result[2]
-	icon_state = "[name][result]"
-	src.visible_message(SPAN_NOTICE("\The [src] lands on [result]. [comment]"))
+	var/comment = roll_die()
+
+	if(!TT.thrower)
+		return	//	Less spam when moving with explosions, etc.
+
+	visible_message(SPAN_NOTICE("\The [src] lands on [result]. [comment]"))
+
+
+/// Gives a random result and changing icon after it. Also returns a comment about result.
+/obj/item/dice/proc/roll_die()
+	SHOULD_CALL_PARENT(TRUE)
+
+	result = rand(1, sides)
+	update_icon()
+
+
+/obj/item/dice/d4
+	name = "d4"
+	desc = "A dice with four sides."
+	icon_state = "d4"
+	sides = 4
+
+
+/obj/item/dice/d6
+	name = "d6"
+	desc = "A dice with six sides."
+	icon_state = "d6"
+	sides = 6
+
+
+/obj/item/dice/d8
+	name = "d8"
+	desc = "A dice with eight sides."
+	icon_state = "d8"
+	sides = 8
+
+
+/obj/item/dice/d10
+	name = "d10"
+	desc = "A dice with ten sides."
+	icon_state = "d10"
+	sides = 10
+
+
+/obj/item/dice/d12
+	name = "d12"
+	desc = "A dice with twelve sides."
+	icon_state = "d12"
+	sides = 12
+
+
+/obj/item/dice/d20
+	name = "d20"
+	desc = "A dice with twenty sides."
+	icon_state = "d20"
+	sides = 20
+
+
+/obj/item/dice/d20/roll_die()
+	. = ..()
+
+	if(result == 20)
+		. = "Nat 20!"
+
+	else if(result == 1)
+		. = "Ouch, bad luck."
+
+
+/obj/item/dice/d20/cursed
+	desc = "A dice with twenty sides said to have an ill effect on those that are unlucky..."
+
+
+/obj/item/dice/d20/cursed/attack_self(mob/user)
+	..()
+
+	if(!isliving(user))
+		return
+
+	var/mob/living/thrower_living = user
+
+	if(result == 20)
+		thrower_living.adjustBruteLoss(-30)
+
+	else if(result == 1)
+		thrower_living.adjustBruteLoss(30)
+
+
+/obj/item/dice/d100
+	name = "d100"
+	desc = "A dice with ten sides. This one is for the tens digit."
+	icon_state = "d100"
+	sides = 10

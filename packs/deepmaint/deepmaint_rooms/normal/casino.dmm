@@ -376,7 +376,7 @@
 /area/map_template/deepmaint)
 "XK" = (
 /obj/structure/table/gamblingtable,
-/obj/item/dice,
+/obj/item/dice/d6,
 /turf/simulated/floor/carpet,
 /area/map_template/deepmaint)
 "XP" = (

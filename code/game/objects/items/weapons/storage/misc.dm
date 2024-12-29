@@ -4,7 +4,7 @@
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
 	startswith = list(
-		/obj/item/dice = 6
+		/obj/item/dice/d6 = 6
 	)
 
 
@@ -15,7 +15,7 @@
 	icon_state = "magicdicebag"
 	startswith = list(
 		/obj/item/dice/d4 = 1,
-		/obj/item/dice = 1,
+		/obj/item/dice/d6 = 1,
 		/obj/item/dice/d8 = 1,
 		/obj/item/dice/d10 = 1,
 		/obj/item/dice/d12 = 1,

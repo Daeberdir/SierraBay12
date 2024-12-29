@@ -124,7 +124,7 @@
 /area/map_template/deepmaint)
 "I" = (
 /obj/structure/table/woodentable_reinforced/walnut,
-/obj/item/dice,
+/obj/item/dice/d6,
 /obj/item/dice/d10,
 /obj/item/dice/d12,
 /obj/item/dice/d20,

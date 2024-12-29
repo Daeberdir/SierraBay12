@@ -2947,7 +2947,7 @@
 "is" = (
 /obj/structure/table/gamblingtable,
 /obj/structure/casino/craps/craps_down,
-/obj/item/dice,
+/obj/item/dice/d6,
 /turf/simulated/floor/carpet,
 /area/casino/casino_mainfloor)
 "iu" = (
@@ -3575,11 +3575,11 @@
 "jV" = (
 /obj/structure/table/gamblingtable,
 /obj/structure/casino/craps,
-/obj/item/dice{
+/obj/item/dice/d6{
 	pixel_x = 5;
 	pixel_y = -5
 	},
-/obj/item/dice,
+/obj/item/dice/d6,
 /turf/simulated/floor/carpet,
 /area/casino/casino_mainfloor)
 "jW" = (
