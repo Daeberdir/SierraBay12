@@ -20,7 +20,7 @@
 		/obj/item/dice/d10 = 1,
 		/obj/item/dice/d12 = 1,
 		/obj/item/dice/d20 = 1,
-		/obj/item/dice/d100 = 1
+		/obj/item/dice/d00 = 1
 	)
 
 

@@ -50,8 +50,12 @@
 /obj/item/dice/proc/roll_die(mob/thrower)
 	SHOULD_CALL_PARENT(TRUE)
 
-	result = rand(1, sides)
+	result = manipulate_result(rand(1, sides))
 	update_icon()
+
+
+/obj/item/dice/proc/manipulate_result(original)
+	return original
 
 
 /obj/item/dice/d4
@@ -125,8 +129,13 @@
 		thrower_living.adjustBruteLoss(30)
 
 
-/obj/item/dice/d100
-	name = "d100"
+/obj/item/dice/d00
+	name = "d00"
 	desc = "A dice with ten sides. This one is for the tens digit."
-	icon_state = "d100"
+	icon_state = "d00"
 	sides = 10
+
+
+/obj/item/dice/d00/manipulate_result(original)
+	return (original - 1) * 10	// 0, 10, 20 ... 90. It's works best with `d10`.
+
