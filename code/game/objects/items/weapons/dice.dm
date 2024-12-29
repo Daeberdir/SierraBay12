@@ -54,6 +54,7 @@
 	update_icon()
 
 
+/// For use in dice that have unusual side names.
 /obj/item/dice/proc/manipulate_result(original)
 	return original
 
