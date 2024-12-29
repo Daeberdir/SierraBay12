@@ -19,6 +19,7 @@
 		roll_die()
 		return
 
+	desc = initial(desc) + SPAN_NOTICE("<br>Current result: [result].")
 	update_icon()
 
 
@@ -46,11 +47,12 @@
 	visible_message(SPAN_NOTICE("\The [src] lands on [result]. [comment]"))
 
 
-/// Gives a random result and changing icon after it. Also returns a comment about result.
+/// Gives a random result and changing `icon_state` and `desc` after it. Also returns a comment about result.
 /obj/item/dice/proc/roll_die(mob/thrower)
 	SHOULD_CALL_PARENT(TRUE)
 
 	result = manipulate_result(rand(1, sides))
+	desc = initial(desc) + SPAN_NOTICE("<br>Current result: [result].")
 	update_icon()
 
 
