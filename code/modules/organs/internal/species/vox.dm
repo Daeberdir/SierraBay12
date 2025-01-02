@@ -226,11 +226,19 @@
 
 	return 1
 
+
 /obj/item/organ/internal/voxstack/removed()
 	var/obj/item/organ/external/head = owner.get_organ(parent_organ)
 	owner.visible_message(SPAN_DANGER("\The [src] rips gaping holes in \the [owner]'s [head.name] as it is torn loose!"))
 	do_backup()
-	..()
+	..()	// Removing stack before damaging organs, so it can't get broken during it.
+			// And so, we are safe from getting an infinite loop if the stack somehow forces a head to blow up.
+
+	head.take_external_damage(clamp(rand(15, 20), 0, head.min_broken_damage - head.get_damage()))	// Can't cause critical conditions such as fractures or decapitation.
+
+	for(var/obj/item/organ/internal/organ in head.contents)
+		organ.take_internal_damage(rand(30, 70))
+
 
 /obj/item/organ/internal/voxstack/proc/overwrite()
 	if(owner.mind && owner.ckey) //Someone is already in this body!
