@@ -229,15 +229,27 @@
 
 /obj/item/organ/internal/voxstack/removed()
 	var/obj/item/organ/external/head = owner.get_organ(parent_organ)
+
 	owner.visible_message(SPAN_DANGER("\The [src] rips gaping holes in \the [owner]'s [head.name] as it is torn loose!"))
+
+	// Early removing stack make us safe from getting an infinite loop.
 	do_backup()
-	..()	// Removing stack before damaging organs, so it can't get broken during it.
-			// And so, we are safe from getting an infinite loop if the stack somehow forces a head to blow up.
+	..()
 
-	head.take_external_damage(clamp(rand(15, 20), 0, head.min_broken_damage - head.get_damage()))	// Can't cause critical conditions such as fractures or decapitation.
+	// Stack will return to the head if owner was decapitated, so we don't need "post remove" code below.
+	if(!head.owner)
+		return
 
-	for(var/obj/item/organ/internal/organ in head.contents)
+	// Stack was completely removed before and can't get broken by removing itself.
+	for(var/obj/item/organ/internal/organ as anything in head.internal_organs)
 		organ.take_internal_damage(rand(30, 70))
+
+	// Damage is limited and can't cause critical conditions like fracturing, decapitation, etc.
+	var/potencial_external_damage = clamp(rand(15, 20) * head.get_brute_mod(), 0, head.min_broken_damage - head.get_damage())
+	if(!head.createwound(INJURY_TYPE_BRUISE, potencial_external_damage))
+		return
+
+	head.finish_wound_creating(potencial_external_damage)
 
 
 /obj/item/organ/internal/voxstack/proc/overwrite()

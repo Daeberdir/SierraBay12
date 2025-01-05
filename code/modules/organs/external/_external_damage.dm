@@ -90,40 +90,53 @@
 		else
 			createwound(INJURY_TYPE_BURN, burn)
 
-	//Initial pain spike
-	add_pain(0.6*burn + 0.4*brute)
-
-	//Disturb treated burns
-	if(brute > 5)
-		var/disturbed = 0
-		for(var/datum/wound/burn/W in wounds)
-			if((W.disinfected || W.salved) && prob(brute + W.damage))
-				W.disinfected = 0
-				W.salved = 0
-				disturbed += W.damage
-		if(owner && disturbed)
-			to_chat(owner,SPAN_WARNING("Ow! Your burns were disturbed."))
-			add_pain(0.5*disturbed)
-
-	//If there are still hurties to dispense
-	if (owner && spillover)
-		owner.shock_stage += spillover * config.organ_damage_spillover_multiplier
-
-	// sync the organ's damage with its wounds
-	update_damages()
-	if (owner)
-		owner.updatehealth()
-		if(status & ORGAN_BLEEDING)
-			owner.update_bandages()
-
-		if(update_damstate())
-			owner.UpdateDamageIcon()
+	finish_wound_creating(brute, burn, spillover)
 
 	if(created_wound && isobj(used_weapon))
 		var/obj/O = used_weapon
 		O.after_wounding(src, created_wound)
 
 	return created_wound
+
+
+/obj/item/organ/external/proc/finish_wound_creating(brute, burn, spillover)
+	var/disturbed = 0
+
+	// Initial pain spike.
+	add_pain(0.4 * brute + 0.6 * burn)
+
+	// Disturb treated burns.
+	if(brute > 5)
+		for(var/datum/wound/burn/wound in wounds)
+			if((wound.disinfected || wound.salved) && prob(brute + wound.damage))
+				wound.disinfected = FALSE
+				wound.salved = FALSE
+				disturbed += wound.damage
+
+		add_pain(0.5 * disturbed)
+
+
+	// Sync the organ's damage with its wounds.
+	update_damages()
+
+	if(!owner)
+		return
+
+	if(disturbed)
+		to_chat(owner, SPAN_WARNING("Ow! Your burns were disturbed."))
+
+	// If there are still hurties to dispense.
+	if(spillover > 0)
+		owner.shock_stage += spillover * config.organ_damage_spillover_multiplier
+
+	if(status & ORGAN_BLEEDING)
+		owner.update_bandages()
+
+	if(update_damstate())
+		owner.UpdateDamageIcon()
+
+	owner.updatehealth()
+
 
 /obj/item/organ/external/proc/damage_internal_organs(brute, burn, damage_flags)
 	if(!LAZYLEN(internal_organs))
